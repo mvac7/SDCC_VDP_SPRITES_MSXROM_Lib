@@ -1,6 +1,6 @@
 /* =============================================================================
   test VDP SPRITE MSXROM Library
-  Version: 1.1
+  Version: 1.2
   Author: mvac7/303bcn
   Architecture: MSX
   Format: ROM
@@ -9,7 +9,8 @@
   mail: mvac7303b@gmail.com
     
 History of versions:
- - v1.1 (19/04/2018) Current version    
+ - v1.2 (19/04/2018) Current version
+ - v1.1 ( 2/03/2017)    
  - v1.0 (25/02/2017) First version
 ============================================================================= */
 
@@ -60,7 +61,7 @@ void testSpriteVisible();
 // constants  ------------------------------------------------------------------
 
 const char text01[] = "Test SDCC SPRITES MSXROM Lib"; 
-const char text02[] = "            v1.1 (2/03/2017)";
+const char text02[] = "           v1.2 (19/04/2018)";
 
 
 const char sprcol[8]={12,2,3,7,6,8,9,14};
