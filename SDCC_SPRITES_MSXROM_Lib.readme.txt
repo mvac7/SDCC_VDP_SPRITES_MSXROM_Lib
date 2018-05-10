@@ -65,29 +65,29 @@ Includes an application for test and learning purposes.
 
 About the Sprite libraries:
 
-I am developing several libraries for the management of MSX Sprites, both for 
-the creation of ROMs (using the BIOS), and executables of MSXDOS.
+I'm developing several libraries for the management of MSX Sprites, both for 
+the creation of ROMs (using the BIOS), and MSXDOS executables.
 They are designed for the development of applications for the first generation 
 of MSX but some of the variations are directed in how certain functions behave 
 when using the G3 mode of the video processor V9938 and thus be able to take 
 advantage of it, when it is executed in a MSX2 or higher.
 
 The projected libraries are the following:
-- SPRITES S (Small) - Basic functions for initialization and visualization 
-  of sprites. It is more compact so it takes up less space in our application.
+- SPRITES S (Small) - Basic functions for the initialization and visualization 
+  of Sprites. It is more compact so it takes up less space in our application.
 - SPRITES - It includes the same functions as the Small version and adds to 
   access specific parameters (positioning, color, pattern, visibility and 
   EarlyClock).
 - SPRITE 12 - Same as SPRITES but in the G3 screen mode (V9938), it treats the 
   color parameters in a simplified way. Assign the color parameters and 
-  EarlyClock to all the lines of the sprites.
+  EarlyClock to all the lines of the Sprites.
 - SPRITE DUMP - Uses a buffer in RAM that has to be dumped in each interruption.
-  Includes a Sprite Flicker, to allow viewing up to 8 sprites per line.
+  Includes a Sprite Flicker, to allow viewing up to 8 sprites per line.
 
 To optimize our development, I recommend building your library with only those 
 functions you need.
 
-I have yet to develop a library to work with the multi-colored sprites of the 
+I have yet to develop a library to work with the multi-colored Sprites of the 
 V9938.
 
                              
