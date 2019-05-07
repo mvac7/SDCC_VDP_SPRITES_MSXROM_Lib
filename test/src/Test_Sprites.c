@@ -1,6 +1,6 @@
 /* =============================================================================
   test VDP SPRITE MSXROM Library
-  Version: 1.3 (30/04/2019)
+  Version: 1.3.1 (7/05/2019)
   Author: mvac7/303bcn
   Architecture: MSX
   Format: ROM
@@ -9,7 +9,8 @@
   mail: mvac7303b@gmail.com
     
 History of versions:
- - v1.3 (30/04/2019) < current version
+ - v1.3.1 (7/05/2019) < current version
+ - v1.3 (30/04/2019) 
  - v1.2 (19/04/2018) 
  - v1.1 ( 2/03/2017)    
  - v1.0 (25/02/2017) First version
@@ -17,7 +18,7 @@ History of versions:
 
 #include "../include/newTypes.h"
 #include "../include/msxBIOS.h"
-#include "../include/msxsystemvars.h"
+#include "../include/msxSystemVariables.h"
 
 #include "../include/VDP_TMS9918A.h"
 #include "../include/VDP_SPRITES.h"
@@ -61,9 +62,8 @@ void testSpriteVisible();
 
 // constants  ------------------------------------------------------------------
 
-const char text01[] = "Test SDCC SPRITES MSXROM Lib"; 
-const char text02[] = "           v1.3 (30/04/2019)";
-const char text03[] = "Press any key";
+const char text01[] = "Test SDCC SPRITES Lib v1.3.1";
+const char text02[] = "Press any key";
 
 const char sprcol[8]={12,2,3,7,6,8,9,14};
 
@@ -142,11 +142,9 @@ __endasm;
   
   LOCATE(2,10);
   PRINT(text01);
-  LOCATE(2,11);
-  PRINT(text02);
   
-  LOCATE(2,13);
-  PRINT(text03);
+  LOCATE(2,12);
+  PRINT(text02);
   INKEY();
   
 //------------------------------------------------------------------------------   
@@ -368,7 +366,6 @@ void setFont()
 void testSPRITES()
 {
   char posY=2;
-  char key;
   
   setSpritesPatterns();
   
@@ -431,9 +428,9 @@ void testSPRITES()
   WAIT(50);
   
   posY+=3;
-  VPRINT(0,posY, text03);
-  LOCATE(12,posY);
-  key = INKEY();
+  VPRINT(0,posY, text02);
+  LOCATE(14,posY);
+  INKEY();
   
   return;
 }
@@ -445,7 +442,7 @@ void testSPRITES()
 void setSpritesPatterns()
 {
   HALT;
-  CopyToVRAM((uint) SPRITE_DATA,BASE14,32*14);
+  CopyToVRAM((uint) SPRITE_DATA,BASE14,32*10);
 }
 
 
