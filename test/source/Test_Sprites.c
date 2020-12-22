@@ -1,12 +1,11 @@
 /* =============================================================================
   test VDP SPRITE MSXROM Library
   Version: 1.3.1 (7/05/2019)
-  Author: mvac7/303bcn
+  Author: mvac7
   Architecture: MSX
   Format: ROM
   Programming language: C
-  WEB: 
-  mail: mvac7303b@gmail.com
+
     
 History of versions:
  - v1.3.1 (7/05/2019) < current version
@@ -18,7 +17,7 @@ History of versions:
 
 #include "../include/newTypes.h"
 #include "../include/msxBIOS.h"
-#include "../include/msxSystemVariables.h"
+#include "../include/msxSystemVars.h"
 
 #include "../include/VDP_TMS9918A.h"
 #include "../include/VDP_SPRITES.h"
@@ -203,14 +202,18 @@ __endasm;*/
 /* =============================================================================
 One character input (waiting)
 ============================================================================= */
-char INKEY(){
+char INKEY() __naked
+{
 __asm
   push IX
   ld   IX,#0
-  add  IX,SP  
+  add  IX,SP
+    
   call CHGET
+  
   ld   L,A
   pop  IX
+  ret
 __endasm;
 }
 
@@ -255,9 +258,9 @@ void VPOKEARRAY(uint vaddr, char* text)
    x(byte) - column (0 to 31 or 39)
    y(byte) - line   (0 to 23)
 ============================================================================= */
-void LOCATE(char x, char y)
+void LOCATE(char x, char y) __naked
 {
-x;y;
+  x;y;
 __asm
   push IX
   ld   IX,#0
@@ -272,6 +275,7 @@ __asm
   call POSIT
   
   pop  IX
+  ret
 __endasm;
 
 }
@@ -281,9 +285,9 @@ __endasm;
 /* =============================================================================
    Print a text in screen
 ============================================================================= */
-void PRINT(char* text)
+void PRINT(char* text) __naked
 { 
-text;
+  text;
 __asm
   push IX
   ld   IX,#0
@@ -301,12 +305,13 @@ nextCHAR:
   jr   nextCHAR
 ENDnext:  
   pop  IX
+  ret
 __endasm; 
 }
 
 
 
-char PEEK(uint address)
+char PEEK(uint address) __naked
 {
   address;
 __asm
@@ -319,13 +324,14 @@ __asm
   
   ld   L,(HL)
   
-  pop  IX  
+  pop  IX
+  ret  
 __endasm;
 }
 
 
 
-uint PEEKW(uint address)
+uint PEEKW(uint address) __naked
 {
   address;
 __asm
@@ -340,7 +346,8 @@ __asm
   ld   D,(HL)
   ex   DE,HL  
   
-  pop  IX  
+  pop  IX
+  ret  
 __endasm;
 }
 
