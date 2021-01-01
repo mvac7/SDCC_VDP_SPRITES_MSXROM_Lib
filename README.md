@@ -9,12 +9,11 @@ Programming language: C and Z80 assembler
 
 
 
-
 ## Description
 
 Open Source library with functions to directly access to sprites of the TMS9918A.
 
-Provides basic functions for initialization and display Sprites and functions for access specific parameters (positioning, color, pattern, visibility and EarlyClock).
+Provides a set of functions for displaying Sprites, both fully (PUTSPRITE) and specific (positioning, color, pattern, visibility and EarlyClock).
 
 Contains the PUTSPRITE function similar to that of MSX BASIC.
 
@@ -24,7 +23,12 @@ It uses the functions from the MSX BIOS, so it is designed to create application
   
 Use them for developing MSX applications using [Small Device C Compiler (SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 
-Includes an application for test and learning purposes.
+In the source code (\examples), you can find applications for testing and learning purposes.
+
+This library is part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
+
+Enjoy it!
+
 
 
 ### About the Sprite libraries
@@ -87,11 +91,11 @@ I want to give a special thanks to all those who freely share their knowledge wi
 
 ## Functions
 
-* void ClearSprites() - Initialises all sprite data.
-* void PUTSPRITE(char plane, char x, char y, char color, char pattern) - Displays the sprite pattern.
-* void SetSpritePattern(char plane, char pattern) - Assign a pattern to a sprite plane.
-* void SetSpriteColor(char plane, char color) - Assign a color to a sprite plane.
-* void SetSpritePosition(char plane, char x, char y) - Assigns the position coordinates of a sprite plane.
-* void SetSpriteVisible(char plane, boolean state) - Hides or shows a sprite plane.
-* void SetEarlyClock(char plane) - Apply the Early Clock of a sprite plane. Move 32 points to the left the X position of the sprite.
-* void UnsetEarlyClock(char plane) - Disables the Early Clock. Restore the position of a sprite plane.
+* void **ClearSprites**() - Initialises all sprite data.
+* void **PUTSPRITE**(char plane, char x, char y, char color, char pattern) - Displays the sprite pattern.
+* void **SetSpritePattern**(char plane, char pattern) - Assign a pattern to a sprite plane.
+* void **SetSpriteColor**(char plane, char color) - Assign a color to a sprite plane.
+* void **SetSpritePosition**(char plane, char x, char y) - Assigns the position coordinates of a sprite plane.
+* void **SetSpriteVisible**(char plane, boolean state) - Hides or shows a sprite plane.
+* void **SetEarlyClock**(char plane) - Apply the Early Clock of a sprite plane. Move 32 points to the left the X position of the sprite.
+* void **UnsetEarlyClock**(char plane) - Disables the Early Clock. Restore the position of a sprite plane.
