@@ -17,6 +17,13 @@ Provides a set of functions for displaying Sprites, both fully (PUTSPRITE) and s
 
 Contains the PUTSPRITE function similar to that of MSX BASIC.
 
+Allows you to work with in G3 screen mode (V9938), but color cannot be assigned. 
+I require that we write the colors of the 8/16 lines of each sprite plane in the Sprite Color Table (VRAM 1C00h). 
+The same will happen, for the Early Clock attribute. 
+The functions of this library will not take effect. 
+Bit 7 (EC) must be modified for each line of the sprite plane of the same color table. 
+More information in the [9938 Technical Data Book](http://map.grauw.nl/resources/video/v9938/v9938.xhtml).
+
 It is complemented with the [VDP TMS9918A MSX ROM Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib), necessary for the initialization of the screen (screen and sprites mode).
 
 It uses the functions from the MSX BIOS, so it is designed to create applications in ROM format.
@@ -40,8 +47,8 @@ They are designed for the development of applications for the first generation o
 The projected libraries are the following:
 - [SPRITES Small](https://github.com/mvac7/SDCC_VDP_SPRITES_S_MSXROM_Lib) - Basic functions for managing Sprites. It is more compact so it takes up less space in our application.
 - [SPRITES](https://github.com/mvac7/SDCC_VDP_SPRITES_MSXROM_Lib) - It includes the same functions as the Small version and adds to access specific parameters (positioning, color, pattern, visibility and EarlyClock).
-- [SPRITE 1/2](https://github.com/mvac7/SDCC_VDP_SPRITES_12_MSXROM_Lib) - Same as SPRITES but in the G3 screen mode (V9938), it treats the color parameters in a simplified way. Assign the color parameters and EarlyClock to all the lines of the Sprites.
-- SPRITE DUMP (In development) - Uses a buffer in RAM that has to be dumped in each interruption. Includes a Sprite Flicker, to allow viewing up to 8 sprites per line.
+- [SPRITES 1/2](https://github.com/mvac7/SDCC_VDP_SPRITES_12_MSXROM_Lib) - Same as SPRITES but in the G3 screen mode (V9938), it treats the color parameters in a simplified way. Assign the color parameters and EarlyClock to all the lines of the Sprites.
+- SPRITES DUMP (In development) - Uses a buffer in RAM that has to be dumped in each interruption. Includes a Sprite Flicker, to allow viewing up to 8 sprites per line.
 
 To optimize our development, I recommend building your library with only those functions you need.
 
@@ -54,7 +61,6 @@ I have yet to develop a library to work with the multi-colored Sprites of the V9
 - v1.2 (22/12/2020) Removed sprite mode initialization functions.
 - v1.1 (2/02/2017)
 - v1.0 ?
-
 
 
 

@@ -1,5 +1,5 @@
 /* =============================================================================
-  test VDP SPRITE MSXROM Library
+  test VDP SPRITE MSX ROM SDCC Library
   Version: 1.3.1 (7/05/2019)
   Author: mvac7
   Architecture: MSX
@@ -19,7 +19,7 @@ History of versions:
 #include "../include/msxBIOS.h"
 #include "../include/msxSystemVars.h"
 
-#include "../include/VDP_TMS9918A.h"
+#include "../include/VDP_TMS9918A_MSXROM.h"
 #include "../include/VDP_SPRITES.h"
 
 
