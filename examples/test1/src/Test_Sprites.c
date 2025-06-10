@@ -1,25 +1,32 @@
 /* =============================================================================
-  test VDP SPRITE MSX ROM SDCC Library
-  Version: 1.3.1 (7/05/2019)
-  Author: mvac7
-  Architecture: MSX
-  Format: ROM
-  Programming language: C
+# Test Sprites
 
+Version: 1.4 (10/06/2025)
+Author: mvac7/303bcn
+Architecture: MSX
+Format: 16K ROM
+Programming language: C and Z80 assembler
+Compiler: SDCC 4.4 or newer
+
+## Description:
+
+Perform a test of the functions of the VDP SPRITE library for MSX ROM 
+environment.
     
-History of versions:
- - v1.3.1 (7/05/2019) < current version
- - v1.3 (30/04/2019) 
- - v1.2 (19/04/2018) 
- - v1.1 ( 2/03/2017)    
- - v1.0 (25/02/2017) First version
+## History of versions (dd/mm/yyyy):
+- v1.4 (10/06/2025) < Update to SDCC (4.1.12) Z80 calling conventions
+- v1.3.1 (7/05/2019)
+- v1.3 (30/04/2019) 
+- v1.2 (19/04/2018) 
+- v1.1 ( 2/03/2017)    
+- v1.0 (25/02/2017) First version
 ============================================================================= */
 
 #include "../include/newTypes.h"
 #include "../include/msxBIOS.h"
-#include "../include/msxSystemVars.h"
+#include "../include/msxSystemVariables.h"
 
-#include "../include/VDP_TMS9918A_MSXROM.h"
+#include "../include/VDP_TMS9918A_MSXBIOS.h"
 #include "../include/VDP_SPRITES.h"
 
 
@@ -32,11 +39,11 @@ History of versions:
 
 //  definition of functions  ---------------------------------------------------
 void WAIT(uint cicles);
-char INKEY();
+char INKEY(void);
 
-void CLS();
+//void CLS(void);
 
-void VPRINT(byte column, byte line, char* text);  //print in screen 1 or 2
+void VPRINT(char column, char line, char* text);  //print in screen 1 or 2
 void VPOKEARRAY(uint vaddr, char* text);
 
 void LOCATE(char x, char y);
@@ -45,23 +52,23 @@ void PRINT(char* text);
 char PEEK(uint address);
 uint PEEKW(uint address);
 
-void setFont();
+void setFont(void);
 
-void setSpritesPatterns();
+void setSpritesPatterns(void);
 void showSprites(char offset);
 
-void testSPRITES();
-void testSpritePosition();
-void testSpriteColor();
-void testSpritePattern();
-void testSpriteVisible();
+void testSPRITES(void);
+void testSpritePosition(void);
+void testSpriteColor(void);
+void testSpritePattern(void);
+void testSpriteVisible(void);
 
 
 
 
 // constants  ------------------------------------------------------------------
 
-const char text01[] = "Test SDCC SPRITES Lib v1.3.1";
+const char text01[] = "Test SDCC SPRITES Lib";
 const char text02[] = "Press any key";
 
 const char sprcol[8]={12,2,3,7,6,8,9,14};
@@ -182,18 +189,6 @@ __endasm;
   VPRINT(0,0,"End of the test...");
   WAIT(30*10);
   
-     
-
-//EXIT MSXDOS
-/*  screen(0);
-    
-__asm
- 	ld b,4(ix)
-	ld c,#0x62
-	call 5 
-__endasm;*/
-//end EXIT
-
 }
 
 
@@ -202,18 +197,12 @@ __endasm;*/
 /* =============================================================================
 One character input (waiting)
 ============================================================================= */
-char INKEY() __naked
+char INKEY(void) __naked
 {
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
     
-  call CHGET
-  
-  ld   L,A
-  pop  IX
-  ret
+  jp BIOS_CHGET
+
 __endasm;
 }
 
@@ -229,15 +218,8 @@ void WAIT(uint cicles)
 
 
 
-void CLS()
-{
-  FillVRAM (BASE10, 0x300, 32);
-}
-
-
-
 //print in screen 1 or 2
-void VPRINT(byte column, byte line, char* text)
+void VPRINT(char column, char line, char* text)
 {
   uint vaddr = BASE10 + (line*32)+column; // calcula la posicion en la VRAM
   VPOKEARRAY(vaddr, text);
@@ -253,31 +235,30 @@ void VPOKEARRAY(uint vaddr, char* text)
 
 
 /* =============================================================================
-   Set a position the cursor in to the specified location
-   Posiciona el cursor hasta la ubicacion especificada
-   x(byte) - column (0 to 31 or 39)
-   y(byte) - line   (0 to 23)
+LOCATE
+Description: 
+	   Moves the cursor to the specified location.
+	   
+Input:	[char] Position X of the cursor. TEXT 1 (0 to 39) 
+										TEXT 2 (0 to 79)
+										GRAPHIC 1 (0 to 31)
+		[char] Position Y of the cursor. (0 to 23)         
+Output:	-
 ============================================================================= */
 void LOCATE(char x, char y) __naked
 {
-  x;y;
+x;
+y;
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   A,4(IX) ;x
-  inc  A       ;incrementa las posiciones para que se situen correctamente en la pantalla
-  ld   H,A
-  ld   A,5(IX) ;y
-  inc  A
-  ld   L,A   
-  call POSIT
-  
-  pop  IX
-  ret
-__endasm;
 
+  inc  A
+  ld   H,A
+
+  inc  L
+  
+  jp   BIOS_POSIT
+
+__endasm;
 }
 
 
@@ -289,23 +270,15 @@ void PRINT(char* text) __naked
 { 
   text;
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   L,4(ix)
-  ld   H,5(ix)
   
 nextCHAR:  
   ld   A,(HL)
   or   A
-  jr   Z,ENDnext   
-  call CHPUT //Displays one character (BIOS)
+  ret   Z
+  call BIOS_CHPUT //Displays one character (BIOS)
   inc  HL
   jr   nextCHAR
-ENDnext:  
-  pop  IX
-  ret
+
 __endasm; 
 }
 
@@ -315,16 +288,7 @@ char PEEK(uint address) __naked
 {
   address;
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   L,4(IX)
-  ld   H,5(IX)
-  
-  ld   L,(HL)
-  
-  pop  IX
+  ld   A,(HL)
   ret  
 __endasm;
 }
@@ -335,18 +299,11 @@ uint PEEKW(uint address) __naked
 {
   address;
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   L,4(ix)
-  ld   H,5(ix)
+
   ld   E,(HL)
   inc  HL
   ld   D,(HL)
-  ex   DE,HL  
-  
-  pop  IX
+
   ret  
 __endasm;
 }
@@ -354,7 +311,7 @@ __endasm;
 
 
 
-void setFont()
+void setFont(void)
 {
   uint ROMfont = PEEKW(CGTABL);
 
@@ -370,7 +327,7 @@ void setFont()
 
 
 // TEST SPRITES  ###############################################################
-void testSPRITES()
+void testSPRITES(void)
 {
   char posY=2;
   
@@ -430,6 +387,10 @@ void testSPRITES()
   SetEarlyClock(7);
   WAIT(50);
   
+  VPRINT(0,posY++, "Set Color with EarlyClock"); 
+  SetSpriteColor(7, 7);
+  WAIT(50);
+  
   VPRINT(0,posY++, "UnsetEarlyClock(plane)");
   UnsetEarlyClock(7);
   WAIT(50);
@@ -446,7 +407,7 @@ void testSPRITES()
 
 
 // Copy sprites data from memory to VRAM
-void setSpritesPatterns()
+void setSpritesPatterns(void)
 {
   HALT;
   CopyToVRAM((uint) SPRITE_DATA,BASE14,32*10);
@@ -477,9 +438,9 @@ void showSprites(char offset)
 
 
 // TEST SETSPRITEVISIBLE  ######################################################
-void testSpriteVisible()
+void testSpriteVisible(void)
 {
-  byte i,o;
+  char i,o;
 
   SetSpriteVisible(0,false);
   
@@ -501,9 +462,9 @@ void testSpriteVisible()
 
 
 // TEST SETSPRITEPATTERN  ######################################################
-void testSpritePattern()
+void testSpritePattern(void)
 {
-  byte i;
+  char i;
 
   
   for(i=2;i<10;i++)
@@ -518,9 +479,9 @@ void testSpritePattern()
 
 
 // TEST SETSPRITECOLOR  ########################################################
-void testSpriteColor()
+void testSpriteColor(void)
 {
-  byte i;
+  char i;
 
   
   for(i=0;i<16;i++)
@@ -535,7 +496,7 @@ void testSpriteColor()
 
 
 // TEST SETSPRITEPOSITION  #####################################################
-void testSpritePosition()
+void testSpritePosition(void)
 {
   uint i=0;
   char gradX = 64;
