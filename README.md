@@ -1,21 +1,23 @@
-# VDP SPRITES MSX ROM SDCC Library (fR3eL Project)
+# VDP SPRITES MSX BIOS SDCC Library (fR3eL Project)
 
 <table>
+<tr><td>Name</td><td>VDP_SPRITES_MSXBIOS</td></tr>
 <tr><td>Architecture</td><td>MSX</td></tr>
 <tr><td>Format</td><td>C Object (SDCC .rel)</td></tr>
 <tr><td>Programming language</td><td>C and Z80 assembler</td></tr>
 <tr><td>Compiler</td><td>SDCC v4.4 or newer</td></tr>
 </table>
 
----
+<br/>
 
 ## Description
 
 Open Source library with functions to directly access to sprites of the TMS9918A.
 
-Provides a set of functions for displaying Sprites, both fully (PUTSPRITE) and specific (positioning, color, pattern, visibility and EarlyClock).
+Provides a set of specific functions to handle Sprites such as positioning, color, pattern assignment, visibility and EarlyClock.
 
-Contains the PUTSPRITE function similar to that of MSX BASIC.
+This is intended for use only with the TMS9918A VDP. It can be used in Graphic3 mode (Screen 4) on the V9938 or higher, but will not display correctly, as the color mapping and EarlyClock functions will not work because they must write to a separate color table. 
+This functionality has not been added to reduce size.
 
 Allows you to work with in G3 screen mode (V9938), but color cannot be assigned. 
 I require that we write the colors of the 8/16 lines of each sprite plane in the Sprite Color Table (VRAM 1C00h). 
@@ -24,7 +26,7 @@ The functions of this library will not take effect.
 Bit 7 (EC) must be modified for each line of the sprite plane of the same color table. 
 More information in the [9938 Technical Data Book](http://map.grauw.nl/resources/video/v9938/v9938.xhtml).
 
-It is complemented with the [VDP TMS9918A MSX ROM Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib), necessary for the initialization of the screen (screen and sprites mode).
+It is complemented with the [VDP TMS9918A MSX BIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib), necessary for the initialization of the screen (screen and sprites mode).
 
 It uses the functions from the MSX BIOS, so it is designed to create applications in ROM format.
   
@@ -40,7 +42,6 @@ You can add part or all of this code in your application development or include 
 Enjoy it!
 
 <br/>
-
 
 
 ### About the Sprite libraries
@@ -67,7 +68,7 @@ I have yet to develop a library to work with the multi-colored Sprites of the V9
 
 - [Small Device C Compiler (SDCC) v4.4](http://sdcc.sourceforge.net/)
 - [Hex2bin v2.5](http://hex2bin.sourceforge.net/)
-- fR3eL [VDP TMS9918A MSX BIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib).
+- fR3eL [VDP_TMS9918A_MSXBIOS](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib) Library
 
 
 
@@ -76,7 +77,6 @@ I have yet to develop a library to work with the multi-colored Sprites of the V9
 
 | Name | Declaration | Description |
 | ---  | ---   | ---         |
-| PUTSPRITE         | `PUTSPRITE(char plane, char x, char y, char color, char pattern)` | Displays the sprite pattern |
 | SetSpritePattern  | `SetSpritePattern(char plane, char pattern)` | Assign a pattern to a sprite plane |
 | SetSpriteColor    | `SetSpriteColor(char plane, char color)` | Assign a color to a sprite plane |
 | SetSpritePosition | `SetSpritePosition(char plane, char x, char y)` | Assigns the position coordinates of a sprite plane |

@@ -8,21 +8,6 @@
 
 
 /* =============================================================================
-PUTSPRITE
-Description: 
-		Displays the sprite pattern.
-Input:	[char] sprite plane (0-31) 
-		[char] x 
-		[char] y
-		[char] color (0-15)
-		[char] pattern
-Output:	-
-============================================================================= */
-void PUTSPRITE(char plane, char x, char y, char color, char pattern);
-
-
-
-/* =============================================================================
 SetSpritePattern
 Description: 
 		Assign a pattern to a sprite plane.
@@ -60,11 +45,13 @@ void SetSpritePosition(char plane, char x, char y);
 
 
 /* =============================================================================
- SetSpriteVisible
- Description: Hides or shows a sprite plane.
- Input:       [char] sprite plane (0-31) 
-              [char] visible state
- Output:      -
+SetSpriteVisible
+Description: 
+		Hides or shows a sprite plane.
+Input:	[char] sprite plane (0-31) 
+		[char] or [boolean]/[switcher] visible state: 
+									0/false/OFF = hidden; 1/true/ON = visible
+Output:	-
 ============================================================================= */
 void SetSpriteVisible(char plane, char state);
 

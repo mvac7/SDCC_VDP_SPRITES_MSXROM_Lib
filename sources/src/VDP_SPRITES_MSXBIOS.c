@@ -1,7 +1,7 @@
 /* ============================================================================= 
 # VDP SPRITE MSX BIOS SDCC Library (fR3eL Project)
 
-- Version: 1.3 (09/06/2025)
+- Version: 1.4 (12/06/2025)
 - Author: mvac7/303bcn
 - Architecture: MSX
 - Format: C object (SDCC .rel)
@@ -19,6 +19,7 @@ It's complemented with the VDP TMS9918A MSX ROM SDCC Library
 https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib
 
 ## History of versions (dd/mm/yyyy):
+- v1.4 (12/06/2025) Remove PUTSPRITE function (add to VDP_TMS9918A_MSXBIOS Lib)
 - v1.3 (09/06/2025) Update to SDCC (4.1.12) Z80 calling conventions
 - v1.2 (22/12/2020) Removed sprite mode initialization functions.
 - v1.1 ( 2/ 2/2017) 
@@ -36,55 +37,7 @@ https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib
 
 
 char SPRITEYBUFF[32];
-char SPRITE_BF[4];
 
-
-
-/* =============================================================================
-PUTSPRITE
-Description: 
-		Displays the sprite pattern.
-Input:	[char] sprite plane (0-31) 
-		[char] x 
-		[char] y
-		[char] color (0-15)
-		[char] pattern
-Output:	-
-============================================================================= */
-void PUTSPRITE(char plane, char x, char y, char color, char pattern)
-{
-plane;x;y;color;pattern;
-__asm
-	push IX
-	ld   IX,#0
-	add  IX,SP
-
-	ld   E,A	;plane
-	ld   D,L	;x
-	
-	ld   HL,#_SPRITE_BF
-	ld   C,4(IX)
-	ld   (HL),C		;Y
-	inc  HL
-	ld   (HL),D		;X
-	inc  HL
-	ld   C,6(IX)
-	call SPRPATNOV  ;pattern
-	ld   (HL),C
-	inc  HL
-	ld   C,5(IX)
-	ld   (HL),C		;color
-	
-	ld   A,E		;plane
-	call BIOS_CALATR	;Returns the address of the sprite attribute table (VRAM) --> HL
-	ld   DE,#_SPRITE_BF
-	ex   DE,HL
-	ld   BC,#4
-	call BIOS_LDIRVM	;Block transfer to VRAM from memory
-	
-	pop  IX	
-__endasm;
-}
 
 
 
@@ -109,28 +62,19 @@ __asm
 	inc  HL
 	inc  HL
 
-//number of pattern to assign  
-	call SPRPATNOV
-	ld   A,C
-	jp   BIOS_WRTVRM
-  
-  
-
-
-// set sprite pattern number
-// Multiply * 4 when its a 16x16 sprite.
-// C <--- Sprite Number  
-// return --> C
-// Registers: AF
-SPRPATNOV:  ;sprite pattern no calc vram address
+//Set sprite pattern number
+//Multiply * 4 when its a 16x16 sprite 
 	call BIOS_GSPSIZ          ;0x008A get sprite size in bytes (Carry flag set when size is 16×16)
-	ret   NC
+	jr   NC,_setSprPat
 
-//si es 16x16
+//IF 16x16
 	SLA  C
-	SLA  C ;multiplica x4  
+	SLA  C ;x 4 
 
-	ret  
+//write to VRAM (OAM)
+_setSprPat:
+	ld   A,C
+	jp   BIOS_WRTVRM 
 __endasm;
 }
 
@@ -162,12 +106,9 @@ __asm
 	call BIOS_RDVRM		//Read VRAM
 	bit  7,A
 	ld   A,C
-	jp   Z,BIOS_WRTVRM
+	jp   Z,BIOS_WRTVRM	//write to VRAM (OAM) without EarlyClock
 	OR   #128			//turn EarlyClock bit ON
-	jp   BIOS_WRTVRM
-
-//	ld   A,C
-//	jp   BIOS_WRTVRM
+	jp   BIOS_WRTVRM	//write to VRAM (OAM)
 
 __endasm;
 }
@@ -200,12 +141,12 @@ __asm
   
 ;y value
 	ld   A,4(ix)   ;x
-	call BIOS_WRTVRM
+	call BIOS_WRTVRM	//write to VRAM (OAM)
 
 ;x value
 	inc  HL
 	ld   A,C
-	call BIOS_WRTVRM
+	call BIOS_WRTVRM	//write to VRAM (OAM)
 
 	pop  IX
 __endasm;
@@ -214,11 +155,13 @@ __endasm;
 
 
 /* =============================================================================
- SetSpriteVisible
- Description: Hides or shows a sprite plane.
- Input:       [char] sprite plane (0-31) 
-              [char] visible state (can use boolean def)
- Output:      -
+SetSpriteVisible
+Description: 
+		Hides or shows a sprite plane.
+Input:	[char] sprite plane (0-31) 
+		[char] or [boolean]/[switcher] visible state: 
+									0/false/OFF = hidden; 1/true/ON = visible
+Output:	-
 ============================================================================= */
 void SetSpriteVisible(char plane, char state)  __naked
 {
@@ -242,7 +185,7 @@ __asm
 ;sprite ON
 	ld   A,(IY)
 
-	jp   BIOS_WRTVRM
+	jp   BIOS_WRTVRM	//write to VRAM (OAM)
 
 
 ;sprite OFF
@@ -253,7 +196,7 @@ SPRITEOFF:
   
 	ld   (IY),A
 	ld   A,#YHIDDEN
-	jp   BIOS_WRTVRM
+	jp   BIOS_WRTVRM	//write to VRAM (OAM)
   
 __endasm;
 }
@@ -263,8 +206,8 @@ __endasm;
 /* =============================================================================
 SetEarlyClock
 Description: 
-		Apply the Early Clock of a sprite plane. Move 32 points to the 
-		left the X position of the sprite.
+		Apply the Early Clock of a sprite plane. 
+		Move 32 points to the left the X position of the sprite.
 Input:	[char] sprite plane (0-31) 
 Output:	-
 ============================================================================= */
