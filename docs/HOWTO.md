@@ -18,9 +18,6 @@
 	- [3.5 SetEarlyClock](#35-SetEarlyClock)
 	- [3.6 UnsetEarlyClock](#36-UnsetEarlyClock)
 - [4 How does it work?](#4-How-does-it-work)
-	- [4.1 TEXT 1 and TEXT 2 modes](#51-TEXT-1-and-TEXT-2-modes)
-
-
 - [5 Code Example](#5-Code-Example)
 - [6 References](#6-References)
 
@@ -237,7 +234,7 @@ This example performs the following actions:
 (5) Hides the sprite on plane 1 using the SetSpriteVisible function.
 (6) Sets the Early Clock bit on plane 0 (shifts 32 pixels to the left) using the SetEarlyClock function.
 
-![Example screenshot](pics/ExampleROM_screenshot.png)
+![Example screenshot](../examples/data/EXAMPLE1.png)
 
 <br/>
 
