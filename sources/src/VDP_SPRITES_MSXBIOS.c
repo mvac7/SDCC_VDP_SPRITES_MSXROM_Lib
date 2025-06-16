@@ -1,6 +1,7 @@
 /* ============================================================================= 
-# VDP SPRITE MSX BIOS SDCC Library (fR3eL Project)
+# VDP SPRITE MSXBIOS SDCC Library (fR3eL Project)
 
+- Name: VDP_SPRITE_MSXBIOS
 - Version: 1.4 (12/06/2025)
 - Author: mvac7/303bcn
 - Architecture: MSX

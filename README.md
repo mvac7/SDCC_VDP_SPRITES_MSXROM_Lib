@@ -19,27 +19,29 @@ Provides a set of specific functions to handle Sprites such as positioning, colo
 This is intended for use only with the TMS9918A VDP. It can be used in Graphic3 mode (Screen 4) on the V9938 or higher, but will not display correctly, as the color mapping and EarlyClock functions will not work because they must write to a separate color table. 
 This functionality has not been added to reduce size.
 
-Allows you to work with in G3 screen mode (V9938), but color cannot be assigned. 
-I require that we write the colors of the 8/16 lines of each sprite plane in the Sprite Color Table (VRAM 1C00h). 
-The same will happen, for the Early Clock attribute. 
-The functions of this library will not take effect. 
-Bit 7 (EC) must be modified for each line of the sprite plane of the same color table. 
-More information in the [9938 Technical Data Book](http://map.grauw.nl/resources/video/v9938/v9938.xhtml).
 
-It is complemented with the [VDP TMS9918A MSX BIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib), necessary for the initialization of the screen (screen and sprites mode).
 
-It uses the functions from the MSX BIOS, so it is designed to create applications in ROM format.
-  
+It is complemented with the [VDP TMS9918A MSXBIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib), necessary for the initialization of the screen (screen and sprites mode).
+
+
+
+It uses the functions from the MSX BIOS, so it is designed to create applications in ROM or MSXBASIC environments.
+
+Since the current version you can display moving figures (Sprites), using the PUTSPRITE function (similar to MSX-BASIC), but you also have the [VDP_SPRITES_MSXBIOS](https://github.com/mvac7/SDCC_VDP_SPRITES_MSXROM_Lib) library that improves the management of Sprite parameters.
+
+You also have a [VDP_TMS9918A](https://github.com/mvac7/SDCC_VDP_TMS9918A_Lib) library where all functions are programmed without using the BIOS. It is designed for use in environments such as DOS or 48K ROMs, although you can also use it in other environments such as ROMs or MSX-BASIC. 
+The advantage of using the BIOS is that the library is more compact and guarantees compatibility between different MSX models, but it has the disadvantage of being slow.
+
+Use them for developing MSX applications using [Small Device C Compiler (SDCC)](http://sdcc.sourceforge.net/) cross compiler.
+
 You can access the documentation here with [`How to use the library`](docs/HOWTO.md).
 
 These libraries are part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
 
-Use them for developing MSX applications using Small Device C Compiler [`SDCC`](http://sdcc.sourceforge.net/).
-
 This project is an Open Source. 
 You can add part or all of this code in your application development or include it in other libraries/engines.
 
-Enjoy it!
+Enjoy it!   
 
 <br/>
 

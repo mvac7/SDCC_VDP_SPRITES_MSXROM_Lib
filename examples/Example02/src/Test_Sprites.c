@@ -1,12 +1,12 @@
 /* =============================================================================
 # Test Sprites
 
-Version: 1.4 (10/06/2025)
-Author: mvac7/303bcn
-Architecture: MSX
-Format: 16K ROM
-Programming language: C and Z80 assembler
-Compiler: SDCC 4.4 or newer
+- Version: 1.4 (10/06/2025)
+- Author: mvac7/303bcn
+- Architecture: MSX
+- Format: 16K ROM
+- Programming language: C and Z80 assembler
+- Compiler: SDCC 4.4 or newer
 
 ## Description:
 
@@ -50,7 +50,6 @@ void LOCATE(char x, char y);
 void PRINT(char* text);
 
 char PEEK(uint address);
-uint PEEKW(uint address);
 
 void setFont(void);
 
@@ -68,7 +67,7 @@ void testSpriteVisible(void);
 
 // constants  ------------------------------------------------------------------
 
-const char text01[] = "Test SDCC SPRITES Lib";
+const char text01[] = "Test TMS9918A SPRITES Libraries";
 const char text02[] = "Press any key";
 
 const char sprcol[8]={12,3,10,15,6,11,9,14};
@@ -83,54 +82,32 @@ const char sprcol[8]={12,3,10,15,6,11,9,14};
 // Sprite range: 0 to 9
 // Size=320
 const char SPRITE_PAT[]={
-0x3C,0x42,0xA5,0x81,0xA5,0x99,0x42,0x3C,
-0x3C,0x7E,0xDB,0xFF,0xFF,0xDB,0x66,0x3C,
-0x6C,0xFE,0xFE,0xFE,0x7C,0x38,0x10,0x00,
-0x10,0x38,0x7C,0xFE,0x7C,0x38,0x10,0x00,
-0x10,0x38,0x54,0xFE,0x54,0x10,0x38,0x00,
-0x10,0x38,0x7C,0xFE,0xFE,0x10,0x38,0x00,
-0x00,0x00,0x00,0x18,0x18,0x00,0x00,0x00,
-0xFF,0xFF,0xFF,0xE7,0xE7,0xFF,0xFF,0xFF,
-0x0F,0x1F,0x3D,0x3F,0x7B,0x7C,0xBF,0xBF,
-0x9F,0xEF,0x6F,0x1F,0x0F,0x05,0x05,0x1D,
-0xC0,0xE0,0x60,0xC0,0x40,0x80,0x80,0x84,
-0x86,0xDE,0xC0,0xC0,0x80,0x00,0x00,0xC0,
-0x05,0x07,0x1A,0x2E,0x6F,0x5B,0x5C,0x5B,
-0x5F,0x58,0x6F,0x2D,0x16,0x02,0x02,0x06,
-0x40,0xC0,0xB8,0xD4,0xD4,0x6A,0xEA,0x6A,
-0xEA,0x6A,0xD4,0xD4,0xF8,0x40,0x40,0x60,
-0x03,0x07,0x4F,0xCF,0x4D,0x4F,0x2C,0x1E,
-0x3F,0x3F,0x3F,0x3F,0x1F,0x02,0x02,0x06,
-0xC0,0xE2,0xE6,0xE2,0xA2,0xF4,0x38,0x7C,
-0xFE,0xFE,0xFE,0xFC,0xF8,0x40,0x40,0x60,
-0x05,0x1E,0x3F,0x6F,0x57,0x6E,0x3F,0x00,
-0x07,0x05,0x07,0x04,0x06,0x03,0x02,0x06,
-0x60,0xF8,0xF4,0xEA,0x76,0xBE,0x7C,0x00,
-0xE0,0x60,0xE0,0x20,0x60,0xC0,0x40,0x60,
-0x05,0x07,0x1F,0x3F,0x7F,0x7F,0x7F,0x7D,
-0x7F,0x7F,0x78,0x3F,0x1F,0x04,0x04,0x0C,
-0x40,0xC0,0xF0,0xF8,0xFC,0xFC,0xFC,0x7C,
-0xFC,0xFC,0x3C,0xF8,0xF0,0x40,0x40,0x60,
-0x07,0x1F,0x3F,0x3F,0x7F,0x71,0x7F,0x7F,
-0x7F,0x7E,0x3E,0x3F,0x1F,0x07,0x02,0x06,
-0xE0,0xF8,0xFC,0xFC,0xFE,0x8E,0xFE,0xFE,
-0xFE,0x7E,0x7C,0xFC,0xF8,0xE0,0x40,0x60,
-0x00,0x07,0x1F,0x3F,0x7F,0x71,0xFF,0xFF,
-0x7B,0x7C,0x3F,0x1F,0x07,0x02,0x02,0x06,
-0x00,0xE0,0xF8,0xFC,0xFE,0x8E,0xFF,0xFF,
-0xDE,0x3E,0xFC,0xF8,0xE0,0x40,0x40,0x60,
-0x05,0x1E,0x3F,0x6F,0x57,0x6E,0x3F,0x00,
-0x07,0x05,0x07,0x04,0x06,0x03,0x02,0x06,
-0x60,0xF8,0xF4,0xEA,0x76,0xBE,0x7C,0x00,
-0xE0,0x60,0xE0,0x20,0x60,0xC0,0x40,0x60};
+0x3C,0x42,0xA5,0x81,0xA5,0x99,0x42,0x3C,0x3C,0x7E,0xDB,0xFF,0xFF,0xDB,0x66,0x3C,
+0x6C,0xFE,0xFE,0xFE,0x7C,0x38,0x10,0x00,0x10,0x38,0x7C,0xFE,0x7C,0x38,0x10,0x00,
+0x10,0x38,0x54,0xFE,0x54,0x10,0x38,0x00,0x10,0x38,0x7C,0xFE,0xFE,0x10,0x38,0x00,
+0x00,0x00,0x00,0x18,0x18,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xE7,0xE7,0xFF,0xFF,0xFF,
+0x0F,0x1F,0x3D,0x3F,0x7B,0x7C,0xBF,0xBF,0x9F,0xEF,0x6F,0x1F,0x0F,0x05,0x05,0x1D,
+0xC0,0xE0,0x60,0xC0,0x40,0x80,0x80,0x84,0x86,0xDE,0xC0,0xC0,0x80,0x00,0x00,0xC0,
+0x05,0x07,0x1A,0x2E,0x6F,0x5B,0x5C,0x5B,0x5F,0x58,0x6F,0x2D,0x16,0x02,0x02,0x06,
+0x40,0xC0,0xB8,0xD4,0xD4,0x6A,0xEA,0x6A,0xEA,0x6A,0xD4,0xD4,0xF8,0x40,0x40,0x60,
+0x03,0x07,0x4F,0xCF,0x4D,0x4F,0x2C,0x1E,0x3F,0x3F,0x3F,0x3F,0x1F,0x02,0x02,0x06,
+0xC0,0xE2,0xE6,0xE2,0xA2,0xF4,0x38,0x7C,0xFE,0xFE,0xFE,0xFC,0xF8,0x40,0x40,0x60,
+0x05,0x1E,0x3F,0x6F,0x57,0x6E,0x3F,0x00,0x07,0x05,0x07,0x04,0x06,0x03,0x02,0x06,
+0x60,0xF8,0xF4,0xEA,0x76,0xBE,0x7C,0x00,0xE0,0x60,0xE0,0x20,0x60,0xC0,0x40,0x60,
+0x05,0x07,0x1F,0x3F,0x7F,0x7F,0x7F,0x7D,0x7F,0x7F,0x78,0x3F,0x1F,0x04,0x04,0x0C,
+0x40,0xC0,0xF0,0xF8,0xFC,0xFC,0xFC,0x7C,0xFC,0xFC,0x3C,0xF8,0xF0,0x40,0x40,0x60,
+0x07,0x1F,0x3F,0x3F,0x7F,0x71,0x7F,0x7F,0x7F,0x7E,0x3E,0x3F,0x1F,0x07,0x02,0x06,
+0xE0,0xF8,0xFC,0xFC,0xFE,0x8E,0xFE,0xFE,0xFE,0x7E,0x7C,0xFC,0xF8,0xE0,0x40,0x60,
+0x00,0x07,0x1F,0x3F,0x7F,0x71,0xFF,0xFF,0x7B,0x7C,0x3F,0x1F,0x07,0x02,0x02,0x06,
+0x00,0xE0,0xF8,0xFC,0xFE,0x8E,0xFF,0xFF,0xDE,0x3E,0xFC,0xF8,0xE0,0x40,0x40,0x60,
+0x05,0x1E,0x3F,0x6F,0x57,0x6E,0x3F,0x00,0x07,0x05,0x07,0x04,0x06,0x03,0x02,0x06,
+0x60,0xF8,0xF4,0xEA,0x76,0xBE,0x7C,0x00,0xE0,0x60,0xE0,0x20,0x60,0xC0,0x40,0x60};
 
 
 
-
-
-  
-// Sine
-// Length=255; Min=16; Max=144; Freq=1; Phase=0
+// ByteniZ3R devtool v0.9.29.0-beta
+// Project: VDP_SPRITES
+// WF: Sine Unsigned Length=256 Min=16 Max=144 Phase=0 Freq=1
 const char SIN[]={
 0x50,0x52,0x53,0x55,0x56,0x58,0x59,0x5B,0x5D,0x5E,0x60,0x61,0x63,0x64,0x66,0x67,
 0x69,0x6A,0x6B,0x6D,0x6E,0x70,0x71,0x72,0x74,0x75,0x76,0x78,0x79,0x7A,0x7B,0x7C,
@@ -152,6 +129,7 @@ const char SIN[]={
 
 
 
+
 char _LineLength;  //sprites per line. TMS9918=4; V9938=8
 
 
@@ -162,57 +140,41 @@ char _LineLength;  //sprites per line. TMS9918=4; V9938=8
 //
 void main(void)
 {
-  SCREEN(1);
-  COLOR(15,4,5);
-  
-__asm
-  ld   HL,#0xF3B0 ;LINLEN system variable
-  ld   A,#32
-  ld   (HL),A     ;WIDTH(32)  
-__endasm;
-  
-  LOCATE(2,10);
-  PRINT(text01);
-  
-  LOCATE(2,12);
-  PRINT(text02);
-  INKEY();
   
 //------------------------------------------------------------------------------   
-  SCREEN(2);
-  CLS();
-  setFont();
-  
-  VPRINT(0,0,"screen 2 (G2)");  
-  
-  _LineLength=4; 
-  testSPRITES();
+	SCREEN(1);
+	CLS();
+
+	VPRINT(0,0,text01);
+	VPRINT(0,1,"Graphic1 (SCREEN 1)");
+	_LineLength=4; 
+	testSPRITES();
 
 
   
 //---------------------------------------------------------------------only MSX2
-  if (PEEK(MSXVER)>0)
+/*  if (PEEK(MSXVER)>0)
   {
     SCREEN(4);  //G4 V9938 mode
     CLS();
     setFont();  
     
-    VPRINT(0,0,"screen 4 (G3)");
+    VPRINT(0,0,"Graphic3 (SCREEN 4)");
     
     _LineLength=8; 
     testSPRITES();  
-  }  
+  }*/  
 //------------------------------------------------------------------------------  
   
 
   
 //END --------------------------------------------------------------------------  
   
-  //COLOR(15,4,4);
-  SCREEN(1);
-  
-  VPRINT(0,0,"End of the test...");
-  WAIT(30*10);
+	//COLOR(15,4,4);
+	SCREEN(1);
+
+	VPRINT(0,0,"End of the test...");
+	WAIT(30*10);
   
 }
 
@@ -226,7 +188,7 @@ char INKEY(void) __naked
 {
 __asm
     
-  jp BIOS_CHGET
+	jp BIOS_CHGET
 
 __endasm;
 }
@@ -237,8 +199,8 @@ __endasm;
 // PAL: 50=1second. ; NTSC: 60=1second. 
 void WAIT(uint cicles)
 {
-  uint i;
-  for(i=0;i<cicles;i++) HALT;
+	uint i;
+	for(i=0;i<cicles;i++) HALT;
 }
 
 
@@ -246,15 +208,15 @@ void WAIT(uint cicles)
 //print in screen 1 or 2
 void VPRINT(char column, char line, char* text)
 {
-  uint vaddr = BASE10 + (line*32)+column; // calcula la posicion en la VRAM
-  VPOKEARRAY(vaddr, text);
+	uint vaddr = BASE10 + (line*32)+column; // calcula la posicion en la VRAM
+	VPOKEARRAY(vaddr, text);
 }
 
 
 
 void VPOKEARRAY(uint vaddr, char* text)
 {
-  while(*(text)) VPOKE(vaddr++,*(text++));
+	while(*(text)) VPOKE(vaddr++,*(text++));
 }
 
 
@@ -276,12 +238,12 @@ x;
 y;
 __asm
 
-  inc  A
-  ld   H,A
+	inc  A
+	ld   H,A
 
-  inc  L
-  
-  jp   BIOS_POSIT
+	inc  L
+
+	jp   BIOS_POSIT
 
 __endasm;
 }
@@ -293,16 +255,16 @@ __endasm;
 ============================================================================= */
 void PRINT(char* text) __naked
 { 
-  text;
+text;
 __asm
   
 nextCHAR:  
-  ld   A,(HL)
-  or   A
-  ret   Z
-  call BIOS_CHPUT //Displays one character (BIOS)
-  inc  HL
-  jr   nextCHAR
+	ld   A,(HL)
+	or   A
+	ret   Z
+	call BIOS_CHPUT //Displays one character (BIOS)
+	inc  HL
+	jr   nextCHAR
 
 __endasm; 
 }
@@ -311,41 +273,23 @@ __endasm;
 
 char PEEK(uint address) __naked
 {
-  address;
+address;
 __asm
-  ld   A,(HL)
-  ret  
+	ld   A,(HL)
+	ret  
 __endasm;
 }
-
-
-
-uint PEEKW(uint address) __naked
-{
-  address;
-__asm
-
-  ld   E,(HL)
-  inc  HL
-  ld   D,(HL)
-
-  ret  
-__endasm;
-}
-
 
 
 
 void setFont(void)
 {
-  uint ROMfont = PEEKW(CGTABL);
+	uint ROMfont = *(unsigned int *) CGTABL;
 
-  CopyToVRAM(ROMfont,BASE12,0x800);       //MSX font pattern
-  CopyToVRAM(ROMfont,BASE12+0x800,0x800); //MSX font pattern
-  CopyToVRAM(ROMfont,BASE12+0x1000,0x800); //MSX font pattern
-  FillVRAM(BASE11,0x1800,0xF4);           //colors
-
-  return;
+	CopyToVRAM(ROMfont,G2_PAT_A,0x800);	//MSX font pattern
+	CopyToVRAM(ROMfont,G2_PAT_B,0x800);	//MSX font pattern
+	CopyToVRAM(ROMfont,G2_PAT_C,0x800);	//MSX font pattern
+	FillVRAM(G2_COL,0x1800,0xF4);			//colors
 }
 
 
@@ -354,75 +298,72 @@ void setFont(void)
 // TEST SPRITES  ###############################################################
 void testSPRITES(void)
 {
-  char posY=2;
-  
-  setSpritesPatterns();
-  
-  VPRINT(0,posY++, "-----------------Basic Functions");
-  
-  // sprites 8x8
-  VPRINT(0,posY++, "SetSpritesSize(0) SPRITES 8x8");
-  SetSpritesSize(0);
-  SetSpritesZoom(false);  
-  showSprites(0);
-  WAIT(50);
-  
-  // test sprites 16x16
-  VPRINT(0,posY++, "SetSpritesSize(1) SPRITES 16x16");
-  SetSpritesSize(1);
-  showSprites(2);
-  WAIT(50);
- 
-  // test sprites 16x16 + zoom  
-  VPRINT(0,posY++, "SetSpritesZoom(true) SPRITES x2");
-  SetSpritesZoom(true);
-  WAIT(50);
-  
-  //test clear sprites data
-  VPRINT(0,posY++, "ClearSprites()");
-  ClearSprites();
-  WAIT(100);
-  
-  setSpritesPatterns();
-  VPRINT(0,posY++, "PUTSPRITE(plane,x,y,color,nSPR)");
-  showSprites(2);
- 
-  WAIT(50);
-  posY++;
-  VPRINT(0,posY++, "--------------Extended Functions");
-  
-  VPRINT(0,posY++, "SetSpriteVisible(plane,state)");
-  testSpriteVisible();
-  
-  VPRINT(0,posY++, "SetSpritePattern(plane,nSPR)"); 
-  testSpritePattern();
-  
-  VPRINT(0,posY++, "SetSpriteColor(plane,color)"); 
-  testSpriteColor();
-  
-  VPRINT(0,posY++, "SetSpritePosition(plane,x,y)");
-  testSpritePosition();
-  
-  WAIT(50);
-  
-  VPRINT(0,posY++, "SetEarlyClock(plane)");
-  SetEarlyClock(7);
-  WAIT(50);
-  
-  VPRINT(0,posY++, "Set Color with EarlyClock"); 
-  SetSpriteColor(7, 7);
-  WAIT(50);
-  
-  VPRINT(0,posY++, "UnsetEarlyClock(plane)");
-  UnsetEarlyClock(7);
-  WAIT(50);
-  
-  posY+=3;
-  VPRINT(0,posY, text02);
-  LOCATE(14,posY);
-  INKEY();
-  
-  return;
+	char posY=2;
+
+	setSpritesPatterns();
+	VPRINT(0,posY++, "----------VDP_TMS9918A Functions");
+
+	// sprites 8x8
+	VPRINT(0,posY++, "SetSpritesSize(0) SPRITES 8x8");
+	SetSpritesSize(0);
+	SetSpritesZoom(false);  
+	showSprites(0);
+	WAIT(50);
+
+	// test sprites 16x16
+	VPRINT(0,posY++, "SetSpritesSize(1) SPRITES 16x16");
+	SetSpritesSize(1);
+	showSprites(2);
+	WAIT(50);
+
+	// test sprites 16x16 + zoom  
+	VPRINT(0,posY++, "SetSpritesZoom(true) SPRITES x2");
+	SetSpritesZoom(true);
+	WAIT(50);
+
+	//test clear sprites data
+	VPRINT(0,posY++, "ClearSprites()");
+	ClearSprites();
+	WAIT(100);
+
+	setSpritesPatterns();
+	VPRINT(0,posY++, "PUTSPRITE(plane,x,y,color,nSPR)");
+	showSprites(2);
+
+	WAIT(50);
+	posY++;  
+	VPRINT(0,posY++, "-----------VDP_SPRITES Functions");
+
+	VPRINT(0,posY++, "SetSpriteVisible(plane,state)");
+	testSpriteVisible();
+
+	VPRINT(0,posY++, "SetSpritePattern(plane,nSPR)"); 
+	testSpritePattern();
+
+	VPRINT(0,posY++, "SetSpriteColor(plane,color)"); 
+	testSpriteColor();
+
+	VPRINT(0,posY++, "SetSpritePosition(plane,x,y)");
+	testSpritePosition();
+
+	WAIT(50);
+
+	VPRINT(0,posY++, "SetEarlyClock(plane)");
+	SetEarlyClock(7);
+	WAIT(50);
+
+	VPRINT(0,posY++, "Set Color with EarlyClock"); 
+	SetSpriteColor(7, 7);
+	WAIT(50);
+
+	VPRINT(0,posY++, "UnsetEarlyClock(plane)");
+	UnsetEarlyClock(7);
+	WAIT(50);
+
+	posY+=3;
+	VPRINT(0,posY, text02);
+	LOCATE(14,posY);
+	INKEY();
 }
 
 
@@ -431,8 +372,8 @@ void testSPRITES(void)
 // Copy sprites data from memory to VRAM
 void setSpritesPatterns(void)
 {
-  HALT;
-  CopyToVRAM((uint) SPRITE_PAT,BASE14,32*10);
+	HALT;
+	CopyToVRAM((uint) SPRITE_PAT,BASE14,32*10);
 }
 
 
@@ -440,21 +381,19 @@ void setSpritesPatterns(void)
 // TEST PUTSPRITE  #############################################################
 void showSprites(char offset)
 {
-  char X=0,Y=3;
-  char i=0;
-  
-  for(i=0;i<8;i++)
-  {
-    PUTSPRITE(i, X*32, Y*32, sprcol[i], i+offset);
-    X++;
-    if(X==_LineLength)
-    {
-      X=0;
-      Y++;
-    }
-  }
+	char X=0,Y=3;
+	char i=0;
 
-  return;
+	for(i=0;i<8;i++)
+	{
+		PUTSPRITE(i, X*32, Y*32, sprcol[i], i+offset);
+		X++;
+		if(X==_LineLength)
+		{
+			X=0;
+			Y++;
+		}
+	}
 }
 
 
@@ -462,21 +401,19 @@ void showSprites(char offset)
 // TEST SETSPRITEVISIBLE  ######################################################
 void testSpriteVisible(void)
 {
-  char i,o;
+	char i,o;
 
-  SetSpriteVisible(0,false);
-  
-  for(i=0;i<8;i++)
-  {
-    for(o=0;o<8;o++)
-    {
-      if (o==i) SetSpriteVisible(o,true);
-      else SetSpriteVisible(o,false);  
-    }
-    WAIT(25);  
-  }  
-  
-  return;
+	SetSpriteVisible(0,false);
+
+	for(i=0;i<8;i++)
+	{
+		for(o=0;o<8;o++)
+		{
+			if (o==i) SetSpriteVisible(o,true);
+			else SetSpriteVisible(o,false);  
+		}
+		WAIT(25);  
+	}  
 }
 
 
@@ -486,15 +423,13 @@ void testSpriteVisible(void)
 // TEST SETSPRITEPATTERN  ######################################################
 void testSpritePattern(void)
 {
-  char i;
-  
-  for(i=2;i<10;i++)
-  {
-    SetSpritePattern(7, i);
-    WAIT(25);  
-  }  
-  
-  return;
+	char i;
+
+	for(i=2;i<10;i++)
+	{
+		SetSpritePattern(7, i);
+		WAIT(25);  
+	}  
 }
 
 
@@ -502,16 +437,13 @@ void testSpritePattern(void)
 // TEST SETSPRITECOLOR  ########################################################
 void testSpriteColor(void)
 {
-  char i;
+	char i;
 
-  
-  for(i=0;i<16;i++)
-  {
-    SetSpriteColor(7, i);
-    WAIT(25);  
-  }  
-  
-  return;
+	for(i=0;i<16;i++)
+	{
+		SetSpriteColor(7, i);
+		WAIT(25);  
+	}  
 }
 
 
@@ -519,22 +451,20 @@ void testSpriteColor(void)
 // TEST SETSPRITEPOSITION  #####################################################
 void testSpritePosition(void)
 {
-  uint i=0;
-  char gradX = 64;
-  char gradY = 0;
+	uint i=0;
+	char gradX = 64;
+	char gradY = 0;
+	
+	SetSpriteColor(7, 14);
 
-  SetSpriteColor(7, 8);  
-
-  for(i=0;i<660;i++)
-  {
-    HALT;
-    SetSpritePosition(7, SIN[gradX], SIN[gradY]);
-    gradX++;
-    gradY++;
-    //if(posT>255) posT=0;  
-  }
-  
-  return;
+	for(i=0;i<660;i++)
+	{
+		HALT;
+		SetSpritePosition(7, SIN[gradX], SIN[gradY]);
+		gradX++;
+		gradY++;
+		//if(posT>255) posT=0;  
+	}
 }
 
 
