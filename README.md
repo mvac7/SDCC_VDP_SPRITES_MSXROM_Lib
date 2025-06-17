@@ -55,8 +55,11 @@ It's possible that, with what I've learned from developing these libraries, I co
 
 ---
 
-## History of versions
+## History of versions 
+(dd/mm/yyyy)
 
+- v1.4 (12/06/2025) Remove PUTSPRITE function (add to VDP_TMS9918A_MSXBIOS Lib)
+- v1.3 (09/06/2025) Update to SDCC (4.1.12) Z80 calling conventions
 - v1.2 (22/12/2020) Removed sprite mode initialization functions.
 - v1.1 (2/02/2017)
 - v1.0 ?
