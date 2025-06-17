@@ -134,7 +134,7 @@ You can add part or all of this code in your application development or include 
 <tr><td colspan=3>Hides or shows a sprite plane</td></tr>
 <tr><td><b>Function</b></td><td colspan=2>SetSpriteVisible(char plane, char state)</td></tr>
 <tr><th rowspan=2>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
-<tr><td><pre>char</pre></td><td>[char] or [boolean]/[switcher] visible state:<br/>0/false/OFF = hidden; 1/true/ON = visible</td></tr>
+<tr><td><pre>char</pre></td><td>[char] or [boolean](https://github.com/mvac7/SDCC_MSX_fR3eL/blob/main/include/newTypes.h)/[switcher](https://github.com/mvac7/SDCC_MSX_fR3eL/blob/main/include/newTypes.h) visible state:<br/>0/false/OFF = hidden; 1/true/ON = visible</td></tr>
 <tr><th>Output</th><td colspan=2>---</td></tr>
 </table>
 
@@ -142,8 +142,8 @@ You can add part or all of this code in your application development or include 
 
 ```c
 	SetSpriteVisible(4,0);		//hidden
-	SetSpriteVisible(7,false);	//hidden ()
-	SetSpriteVisible(8,ON);		//visible ()
+	SetSpriteVisible(7,false);	//hidden
+	SetSpriteVisible(8,ON);		//visible
 ```
 
 <br/>
@@ -215,7 +215,7 @@ This example performs the following actions:
 1. Hides the sprite on plane 1 using the SetSpriteVisible function.
 1. Sets the Early Clock bit on plane 0 (shifts 32 pixels to the left) using the SetEarlyClock function.
 
-![Example screenshot](../examples/data/EXAMPLE1.png)
+![Example screenshot](../examples/data/EXAMPLE1_01.png)
 
 <br/>
 
