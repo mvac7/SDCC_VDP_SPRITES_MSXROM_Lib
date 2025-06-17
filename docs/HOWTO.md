@@ -134,9 +134,14 @@ You can add part or all of this code in your application development or include 
 <tr><td colspan=3>Hides or shows a sprite plane</td></tr>
 <tr><td><b>Function</b></td><td colspan=2>SetSpriteVisible(char plane, char state)</td></tr>
 <tr><th rowspan=2>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
-<tr><td><pre>char</pre></td><td>[char] or [boolean](https://github.com/mvac7/SDCC_MSX_fR3eL/blob/main/include/newTypes.h)/[switcher](https://github.com/mvac7/SDCC_MSX_fR3eL/blob/main/include/newTypes.h) visible state:<br/>0/false/OFF = hidden; 1/true/ON = visible</td></tr>
+<tr><td><pre>char</pre></td><td>[char] or [boolean]/[switcher] visible state:<br/>0/false/OFF = hidden; 1/true/ON = visible</td></tr>
 <tr><th>Output</th><td colspan=2>---</td></tr>
 </table>
+
+| Note: |
+| :---  |
+| To be able to use `boolean` or `switcher` types, you need to include [newTypes.h](https://github.com/mvac7/SDCC_MSX_fR3eL/blob/main/include/newTypes.h) in your source code. |
+
 
 #### Example:
 
