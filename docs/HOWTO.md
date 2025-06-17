@@ -17,9 +17,8 @@
 	- [3.4 SetSpriteVisible](#34-SetSpriteVisible)
 	- [3.5 SetEarlyClock](#35-SetEarlyClock)
 	- [3.6 UnsetEarlyClock](#36-UnsetEarlyClock)
-- [4 How does it work?](#4-How-does-it-work)
-- [5 Code Example](#5-Code-Example)
-- [6 References](#6-References)
+- [4 Code Example](#4-Code-Example)
+- [5 References](#5-References)
 
 <br/>
 
@@ -27,7 +26,27 @@
 
 ## 1 Description
 
+Open Source library with functions to directly access to sprites of the TMS9918A.
 
+Provides a set of specific functions to handle Sprites such as positioning, color, pattern assignment, visibility and EarlyClock.
+
+This is intended for use only with the TMS9918A VDP. 
+
+It uses the functions from the MSX BIOS, so it is designed to create applications in ROM or MSXBASIC environments.
+
+It is complemented with the [VDP_TMS9918A_MSXBIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib), necessary for the initialization of the screen and sprites mode.
+
+You can combine the use of this library's functions with the PUTSPRITE function included in the VDP_TMS9918A library, which allows for a more agile way of initializing a Sprite.
+
+It can be used in Graphic 3 mode (Screen 4) on the V9938 or higher, but will not display correctly, as the color mapping and EarlyClock functions will not work because they must write to a separate color table. 
+This functionality has not been added to this library to keep its size small.
+
+Use them for developing MSX applications using [Small Device C Compiler (SDCC)](http://sdcc.sourceforge.net/) cross compiler.
+
+These libraries are part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
+
+This project is open source under the [MIT license](../LICENSE).
+You can add part or all of this code in your application development or include it in other libraries/engines.
 
 <br/>
 
@@ -38,7 +57,6 @@
 - [Small Device C Compiler (SDCC) v4.4](http://sdcc.sourceforge.net/)
 - [Hex2bin v2.5](http://hex2bin.sourceforge.net/)
 - fR3eL [VDP_TMS9918A_MSXBIOS](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib) Library
-
 
 <br/>
 
@@ -168,44 +186,7 @@
 
 ---
 
-## 4 How does it work?
-
-
-
-
-
-
-
-Allows you to work with in G3 screen mode (V9938), but color cannot be assigned. 
-I require that we write the colors of the 8/16 lines of each sprite plane in the Sprite Color Table (VRAM 1C00h). 
-The same will happen, for the Early Clock attribute. 
-The functions of this library will not take effect. 
-Bit 7 (EC) must be modified for each line of the sprite plane of the same color table. 
-More information in the [9938 Technical Data Book](http://map.grauw.nl/resources/video/v9938/v9938.xhtml).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br/>
-
-### 5.1 
-
-<br/>
-
----
-
-## 5 Code Example
+## 4 Code Example
 
 In the following source code you can see a simple example of using the library. 
 
@@ -227,12 +208,12 @@ And you need the following applications to compile and generate the final ROM:
 - [Hex2bin v2.5](http://hex2bin.sourceforge.net/)
 
 This example performs the following actions:
-(1) Initializes the screen to Graphic1 mode (Screen 1) with 16x16 sprites in 2x zoom mode.
-(2) Copies the graphics of four sprites to the sprite pattern area in VRAM.
-(3)Displays two sprites using the PUTSPRITE instruction (included in the VDP_TMS9918A_MSXBIOS library).
-(4) Displays two sprites using the SetSpritePattern, SetSpriteColor, and SetSpritePosition functions (VDP_SPRITES_MSXBIOS library).
-(5) Hides the sprite on plane 1 using the SetSpriteVisible function.
-(6) Sets the Early Clock bit on plane 0 (shifts 32 pixels to the left) using the SetEarlyClock function.
+1. Initializes the screen to Graphic1 mode (Screen 1) with 16x16 sprites in 2x zoom mode.
+1. Copies the graphics of four sprites to the sprite pattern area in VRAM.
+1. Displays two sprites using the PUTSPRITE instruction (included in the VDP_TMS9918A_MSXBIOS library).
+1. Displays two sprites using the SetSpritePattern, SetSpriteColor, and SetSpritePosition functions (VDP_SPRITES_MSXBIOS library).
+1. Hides the sprite on plane 1 using the SetSpriteVisible function.
+1. Sets the Early Clock bit on plane 0 (shifts 32 pixels to the left) using the SetEarlyClock function.
 
 ![Example screenshot](../examples/data/EXAMPLE1.png)
 
@@ -329,30 +310,41 @@ void WAIT(unsigned int frames)
 
 #### For compile:
 
-First you must compile the source with SDCC as follows (for Windows Command Shell):
+To obtain a binary with the ROM of the example program, execute the following steps in a Windows command line (CMD):
+
+1. Compile with SDCC
 
 ```
 sdcc -mz80 --code-loc 0x4020 --data-loc 0xC000 --use-stdout --no-std-crt0 crt0_MSX816kROM4000.rel VDP_TMS9918A_MSXBIOS.rel VDP_SPRITES_MSXBIOS.rel Example01.c
 ```
 
-If no error is displayed, you should run hex2bin to convert the SDCC output (`Example01.ihx`) to a binary file.
+<br/>
+
+2. Convert the .ihx file to binary with hex2bin
 
 ```
 hex2bin -e bin -l 2000 Example01.ihx
 ```
 
-Rename file `Example01.bin` to `EXAMPLE1.ROM`
+<br/>
+
+3. Rename the binary to .ROM
+
+```
+rename Example01.bin EXAMPLE1.ROM
+```
 
 <br/>
 
 ---
 
-## 6 References
+## 5 References
 
 - Texas Instruments TMS9918A application manual [`PDF`](http://map.grauw.nl/resources/video/texasinstruments_tms9918.pdf)
 - Texas Instruments VDP Programmer’s Guide [`PDF`](http://map.grauw.nl/resources/video/ti-vdp-programmers-guide.pdf)
 - Texas Instruments TMS9918A VDP by Sean Young [`TXT`](http://bifi.msxnet.org/msxnet/tech/tms9918a.txt)
 - The MSX Red Book · [2 Video Display Processor](https://github.com/gseidler/The-MSX-Red-Book/blob/master/the_msx_red_book.md#chapter_2)
+- [9938 Technical Data Book](http://map.grauw.nl/resources/video/v9938/v9938.xhtml)
 
 <br/>
 
