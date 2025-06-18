@@ -12,22 +12,19 @@
 
 ## Description
 
-Open Source library with functions to directly access to sprites of the TMS9918A.
+Open Source library with functions to directly access to sprites of the TMS9918A/28A/29A video processor.
 
 Provides a set of specific functions to handle Sprites such as positioning, color, pattern assignment, visibility and EarlyClock.
-
-This is intended for use only with the TMS9918A VDP. 
-
-It uses the functions from the MSX BIOS, so it is designed to create applications in ROM or MSXBASIC environments.
 
 It is complemented with the [VDP_TMS9918A_MSXBIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib), necessary for the initialization of the screen and sprites mode.
 
 You can combine the use of this library's functions with the PUTSPRITE function included in the VDP_TMS9918A library, which allows for a more agile way of initializing a Sprite.
 
+This library is designed for use only with the VDP TMS9918A.
 It can be used in Graphic 3 mode (Screen 4) on the V9938 or higher, but will not display correctly, as the color mapping and EarlyClock functions will not work because they must write to a separate color table. 
 This functionality has not been added to this library to keep its size small.
 
-Use them for developing MSX applications using [Small Device C Compiler (SDCC)](http://sdcc.sourceforge.net/) cross compiler.
+It uses MSX BIOS functions, so it is designed to develop applications in ROM or MSXBASIC environments, using the Small Device C Compiler [(SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 
 You can access the documentation here with [`How to use the library`](docs/HOWTO.md).
 
@@ -97,7 +94,7 @@ It's possible that, with what I've learned from developing these libraries, I co
 
 The project includes several examples that I have used to test the library and that can help you learn how to use this library.
 
-You can find them in the [`../examples/`](examples/) folder.
+You can find them in the [`examples/`](examples/) folder.
 
 <br/>
 
