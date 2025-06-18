@@ -95,7 +95,9 @@ It's possible that, with what I've learned from developing these libraries, I co
 
 ## Code Examples
 
-In the git project [`examples/`](../examples/), you can find the source code of applications for testing and learning purposes.
+The project includes several examples that I have used to test the library and that can help you learn how to use this library.
+
+You can find them in the [`../examples/`](examples/) folder.
 
 <br/>
 
