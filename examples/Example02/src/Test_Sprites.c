@@ -348,19 +348,19 @@ void testSPRITES(void)
 
 	WAIT(50);
 
-	VPRINT(0,posY++, "SetEarlyClock(plane)");
-	SetEarlyClock(7);
+	VPRINT(0,posY++, "SetEarlyClock(0,ON)");
+	SetEarlyClock(7,ON);
 	WAIT(50);
 
-	VPRINT(0,posY++, "Set Color with EarlyClock"); 
+	VPRINT(0,posY++, "Modify color with EC enabled"); 
 	SetSpriteColor(7, 7);
 	WAIT(50);
 
-	VPRINT(0,posY++, "UnsetEarlyClock(plane)");
-	UnsetEarlyClock(7);
+	VPRINT(0,posY++, "SetEarlyClock(0,OFF)");
+	SetEarlyClock(7,OFF);
 	WAIT(50);
 
-	posY+=3;
+	posY+=2;
 	VPRINT(0,posY, text02);
 	LOCATE(14,posY);
 	INKEY();

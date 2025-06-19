@@ -60,23 +60,15 @@ void SetSpriteVisible(char plane, char state);
 /* =============================================================================
 SetEarlyClock
 Description: 
-		Apply the Early Clock of a sprite plane. Move 32 points to the 
-		left the X position of the sprite.
-Input:	[char] sprite plane (0-31) 
-Output:	-
-============================================================================= */
-void SetEarlyClock(char plane);
-
-
-
-/* =============================================================================
-UnsetEarlyClock
-Description:
-		Disables the Early Clock. Restore the position of a sprite plane.
+		Enable or Disable Early Clock of a sprite plane. 
+		EC: Move 32 points to the left the X position of the sprite.
 Input:	[char] sprite plane (0-31)
+		[char] or [boolean]/[switcher] EC state: 
+									0/false/OFF = disable
+									1/true/ON = enable
 Output:	-
 ============================================================================= */
-void UnsetEarlyClock(char plane);
+void SetEarlyClock(char plane, char state);
 
 
 

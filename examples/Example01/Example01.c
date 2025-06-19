@@ -1,13 +1,12 @@
 /* =============================================================================
-# Example01.c
+Example01.c
+Version: 1.0 (14/06/2025)
+Architecture: MSX
+Format: MSX ROM 8k
+Programming language: C and Z80 assembler
+Compiler: SDCC 4.4 or newer
 
-- Version: 1.0 (14/06/2025)
-- Architecture: MSX
-- Format: MSX ROM 8k
-- Programming language: C and Z80 assembler
-- Compiler: SDCC 4.4 or newer
-
-## Description:
+Description:
 Simple example of the VDP_SPRITE_MSXBIOS Library (fR3eL Project)
 ============================================================================= */
 #include "VDP_TMS9918A_MSXBIOS.h"
@@ -73,7 +72,11 @@ void main(void)
 	
 	WAIT(120);
 	
-	SetEarlyClock(0);		//enable EarlyClock in sprite plane 0 (Pear)
+	SetEarlyClock(0,1);		//enable EarlyClock in sprite plane 0 (Pear)
+	
+	WAIT(120);
+	
+	SetEarlyClock(0,0);		//disable EarlyClock in sprite plane 0
 	
 __asm call 0x009F __endasm;		// execute BIOS CHGET - One character input (waiting)
 }

@@ -70,7 +70,7 @@ __asm
 
 //IF 16x16
 	SLA  C
-	SLA  C ;x 4 
+	SLA  C	//x4 
 
 //write to VRAM (OAM)
 _setSprPat:
@@ -137,14 +137,14 @@ __asm
 	
 	ld   C,L
   
-;A=sprite plane
+//A=sprite plane
 	call BIOS_CALATR	//Returns the address of the sprite attribute table --> HL
   
-;y value
-	ld   A,4(ix)   ;x
+//y value
+	ld   A,4(ix)
 	call BIOS_WRTVRM	//write to VRAM (OAM)
 
-;x value
+//x value
 	inc  HL
 	ld   A,C
 	call BIOS_WRTVRM	//write to VRAM (OAM)
@@ -180,11 +180,11 @@ __asm
 	call BIOS_CALATR	//Returns the address of the sprite attribute table --> HL
 
 	ld   A,C
-	or   A ;0 = off
+	or   A				//0 = off
 	jr   Z,SPRITEOFF
   
 ;sprite ON
-	ld   A,(IY)
+	ld   A,(IY)			//restore y value
 
 	jp   BIOS_WRTVRM	//write to VRAM (OAM)
 
@@ -193,7 +193,7 @@ __asm
 SPRITEOFF:
 	call BIOS_RDVRM
 	cp   #YHIDDEN
-	ret   Z		//if not visible then Dont overwrite. 
+	ret  Z				//if sprite hidden then Dont overwrite
   
 	ld   (IY),A
 	ld   A,#YHIDDEN
@@ -207,50 +207,37 @@ __endasm;
 /* =============================================================================
 SetEarlyClock
 Description: 
-		Apply the Early Clock of a sprite plane. 
-		Move 32 points to the left the X position of the sprite.
-Input:	[char] sprite plane (0-31) 
-Output:	-
-============================================================================= */
-void SetEarlyClock(char plane) __naked
-{
-plane;	//A
-__asm
-
-  call BIOS_CALATR	//Returns the address of the sprite attribute table --> HL
-  
-  inc  HL
-  inc  HL
-  inc  HL
-  call BIOS_RDVRM  ;VPEEK
-  OR   #128
-  jp   BIOS_WRTVRM ;VPOKE  
-
-__endasm;
-}
-
-
-
-/* =============================================================================
-UnsetEarlyClock
-Description:
-		Disables the Early Clock. Restore the position of a sprite plane.
+		Enable or Disable Early Clock of a sprite plane. 
+		EC: Move 32 points to the left the X position of the sprite.
 Input:	[char] sprite plane (0-31)
+		[char] or [boolean]/[switcher] EC state: 
+									0/false/OFF = disable
+									1/true/ON = enable
 Output:	-
 ============================================================================= */
-void UnsetEarlyClock(char plane) __naked
+void SetEarlyClock(char plane, char state) __naked
 {
 plane;	//A
+state;	//L
 __asm
 
-  call BIOS_CALATR	//Returns the address of the sprite attribute table --> HL
+	LD   C,L
+
+	call BIOS_CALATR	//Returns the address of the sprite attribute table --> HL
   
-  inc  HL
-  inc  HL
-  inc  HL
-  call BIOS_RDVRM
-  and  #127
-  jp   BIOS_WRTVRM
-  
+	inc  HL
+	inc  HL
+	inc  HL
+	call BIOS_RDVRM		//A=VPEEK(HL)
+	
+	bit  0,C
+	jr   Z,SPRITE_EC_disa
+	or   #128
+	jp   BIOS_WRTVRM	//VPOKE(HL,A)
+
+SPRITE_EC_disa:
+	and  #127
+	jp   BIOS_WRTVRM
+
 __endasm;
 }

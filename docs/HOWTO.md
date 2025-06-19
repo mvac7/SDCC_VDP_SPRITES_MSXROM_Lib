@@ -69,8 +69,8 @@ You can add part or all of this code in your application development or include 
 <tr><td colspan=3><b>SetSpritePattern</b></td></tr>
 <tr><td colspan=3>Assign a pattern to a sprite plane</td></tr>
 <tr><td><b>Function</b></td><td colspan=2>SetSpritePattern(char plane, char pattern)</td></tr>
-<tr><th rowspan=2>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
-<tr><td><pre>char</pre></td><td>pattern</td></tr>
+<tr><th rowspan=2>Input</th><td>char</td><td>sprite plane (0-31)</td></tr>
+<tr><td>char</td><td>pattern</td></tr>
 <tr><th>Output</th><td colspan=2>---</td></tr>
 </table>
 
@@ -89,8 +89,8 @@ You can add part or all of this code in your application development or include 
 <tr><td colspan=3><b>SetSpriteColor</b></td></tr>
 <tr><td colspan=3>Assign a color to a sprite plane</td></tr>
 <tr><td><b>Function</b></td><td colspan=2>SetSpriteColor(char plane, char color)</td></tr>
-<tr><th rowspan=2>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
-<tr><td><pre>char</pre></td><td>color (0-15)</td></tr>
+<tr><th rowspan=2>Input</th><td>char</td><td>sprite plane (0-31)</td></tr>
+<tr><td>char</td><td>color (0-15)</td></tr>
 <tr><th>Output</th><td colspan=2>---</td></tr>
 </table>
 
@@ -109,9 +109,9 @@ You can add part or all of this code in your application development or include 
 <tr><td colspan=3><b>SetSpritePosition</b></td></tr>
 <tr><td colspan=3>Assigns the position coordinates of a sprite plane</td></tr>
 <tr><td><b>Function</b></td><td colspan=2>SetSpritePosition(char plane, char x, char y)</td></tr>
-<tr><th rowspan=3>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
-<tr><td><pre>char</pre></td><td>x</td></tr>
-<tr><td><pre>char</pre></td><td>y</td></tr>
+<tr><th rowspan=3>Input</th><td>char</td><td>sprite plane (0-31)</td></tr>
+<tr><td>char</td><td>x</td></tr>
+<tr><td>char</td><td>y</td></tr>
 <tr><th>Output</th><td colspan=2>---</td></tr>
 </table>
 
@@ -130,8 +130,8 @@ You can add part or all of this code in your application development or include 
 <tr><td colspan=3><b>SetSpriteVisible</b></td></tr>
 <tr><td colspan=3>Hides or shows a sprite plane</td></tr>
 <tr><td><b>Function</b></td><td colspan=2>SetSpriteVisible(char plane, char state)</td></tr>
-<tr><th rowspan=2>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
-<tr><td><pre>char</pre></td><td>[char] or [boolean]/[switcher] visible state:<br/>0/false/OFF = hidden; 1/true/ON = visible</td></tr>
+<tr><th rowspan=2>Input</th><td>char</td><td>sprite plane (0-31)</td></tr>
+<tr><td>char or boolean/switcher</td><td>visible state:<br/>0/false/OFF = hidden; 1/true/ON = visible</td></tr>
 <tr><th>Output</th><td colspan=2>---</td></tr>
 </table>
 
@@ -154,37 +154,24 @@ You can add part or all of this code in your application development or include 
 
 <table>
 <tr><td colspan=3><b>SetEarlyClock</b></td></tr>
-<tr><td colspan=3>Apply the Early Clock of a sprite plane.<br/>Move 32 points to the left the X position of the Sprite.</td></tr>
-<tr><td><b>Function</b></td><td colspan=2>SetEarlyClock(char plane)</td></tr>
-<tr><th>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
+<tr><td colspan=3>Enable or Disable the EarlyClock of a sprite plane.<br/>Move 32 points to the left the X position of the Sprite.</td></tr>
+<tr><td><b>Function</b></td><td colspan=2>SetEarlyClock(char plane, char state)</td></tr>
+<tr><th rowspan=2>Input</th><td>char</td><td>sprite plane (0-31)</td></tr>
+<tr><td>char or boolean/switcher</td><td>EC state:<br/>0/false/OFF = disable<br/>1/true/ON = enable</td></tr>
 <tr><th>Output</th><td colspan=2>---</td></tr>
 </table>
 
 #### Example:
 
 ```c
-	SetEarlyClock(4);
+	SetEarlyClock(4,1);		//Enable EC on Sprite Plane 4
+	SetEarlyClock(5,0);		//Disable EC on Sprite Plane 5
+	SetEarlyClock(6,ON);	//Enable EC on Sprite Plane 6
+	SetEarlyClock(7,false);	//Disable EC on Sprite Plane 7
 ```
 
 <br/>
 
-### 3.6 UnsetEarlyClock
-
-<table>
-<tr><td colspan=3><b>UnsetEarlyClock</b></td></tr>
-<tr><td colspan=3>Disables the Early Clock.<br/>Restore the position of a Sprite plane.</td></tr>
-<tr><td><b>Function</b></td><td colspan=2>UnsetEarlyClock(char plane)</td></tr>
-<tr><th>Input</th><td><pre>char</pre></td><td>sprite plane (0-31)</td></tr>
-<tr><th>Output</th><td colspan=2>---</td></tr>
-</table>
-
-#### Example:
-
-```c
-	UnsetEarlyClock(4);
-```
-
-<br/>
 
 ---
 
@@ -219,7 +206,8 @@ This example performs the following actions:
 1. Displays two sprites using the PUTSPRITE instruction (included in the VDP_TMS9918A_MSXBIOS library).
 1. Displays two sprites using the SetSpritePattern, SetSpriteColor, and SetSpritePosition functions (VDP_SPRITES_MSXBIOS library).
 1. Hides the sprite on plane 1 using the SetSpriteVisible function.
-1. Sets the Early Clock bit on plane 0 (shifts 32 pixels to the left) using the SetEarlyClock function.
+1. Enable the Early Clock on plane 0 (shifts 32 pixels to the left) using the SetEarlyClock function.
+1. Disable the Early Clock on plane 0.
 
 <br/>
 
@@ -231,15 +219,14 @@ This example performs the following actions:
 
 ```c
 /* =============================================================================
-# Example01.c
+Example01.c
+Version: 1.0 (14/06/2025)
+Architecture: MSX
+Format: MSX ROM 8k
+Programming language: C and Z80 assembler
+Compiler: SDCC 4.4 or newer
 
-- Version: 1.0 (14/06/2025)
-- Architecture: MSX
-- Format: MSX ROM 8k
-- Programming language: C and Z80 assembler
-- Compiler: SDCC 4.4 or newer
-
-## Description:
+Description:
 Simple example of the VDP_SPRITE_MSXBIOS Library (fR3eL Project)
 ============================================================================= */
 #include "VDP_TMS9918A_MSXBIOS.h"
@@ -254,18 +241,22 @@ void WAIT(unsigned int frames);
 // Sprite range: 0 to 3
 // Size=128
 const char Fruits_SSET[]={
+//sprite0
 0x0F,0x1F,0x3D,0x3F,0x7B,0x7C,0xBF,0xBF,
 0x9F,0xEF,0x6F,0x1F,0x0F,0x05,0x05,0x1D,
 0xC0,0xE0,0x60,0xC0,0x40,0x80,0x80,0x84,
 0x86,0xDE,0xC0,0xC0,0x80,0x00,0x00,0xC0,
+//sprite1
 0x03,0x07,0x4F,0xCF,0x4D,0x4F,0x2C,0x1E,
 0x3F,0x3F,0x3F,0x3F,0x1F,0x02,0x02,0x06,
 0xC0,0xE2,0xE6,0xE2,0xA2,0xF4,0x38,0x7C,
 0xFE,0xFE,0xFE,0xFC,0xF8,0x40,0x40,0x60,
+//sprite2
 0x05,0x07,0x1A,0x2E,0x6F,0x5B,0x5C,0x5B,
 0x5F,0x58,0x6F,0x2D,0x16,0x02,0x02,0x06,
 0x40,0xC0,0xB8,0xD4,0xD4,0x6A,0xEA,0x6A,
 0xEA,0x6A,0xD4,0xD4,0xF8,0x40,0x40,0x60,
+//sprite3
 0x05,0x1E,0x3F,0x6F,0x57,0x6E,0x3F,0x00,
 0x07,0x05,0x07,0x04,0x06,0x03,0x02,0x06,
 0x60,0xF8,0xF4,0xEA,0x76,0xBE,0x7C,0x00,
@@ -301,7 +292,11 @@ void main(void)
 	
 	WAIT(120);
 	
-	SetEarlyClock(0);		//enable EarlyClock in sprite plane 0 (Pear)
+	SetEarlyClock(0,1);		//enable EarlyClock in sprite plane 0 (Pear)
+	
+	WAIT(120);
+	
+	SetEarlyClock(0,0);		//disable EarlyClock in sprite plane 0
 	
 __asm call 0x009F __endasm;		// execute BIOS CHGET - One character input (waiting)
 }
@@ -348,11 +343,11 @@ rename Example01.bin EXAMPLE1.ROM
 
 ## 5 References
 
-- Texas Instruments TMS9918A application manual [`PDF`](http://map.grauw.nl/resources/video/texasinstruments_tms9918.pdf)
-- Texas Instruments VDP Programmer’s Guide [`PDF`](http://map.grauw.nl/resources/video/ti-vdp-programmers-guide.pdf)
-- Texas Instruments TMS9918A VDP by Sean Young [`TXT`](http://bifi.msxnet.org/msxnet/tech/tms9918a.txt)
-- The MSX Red Book · [2 Video Display Processor](https://github.com/gseidler/The-MSX-Red-Book/blob/master/the_msx_red_book.md#chapter_2)
-- [9938 Technical Data Book](http://map.grauw.nl/resources/video/v9938/v9938.xhtml)
+- Texas Instruments [TMS9918A application manual](http://map.grauw.nl/resources/video/texasinstruments_tms9918.pdf) `PDF`
+- Texas Instruments [VDP Programmer’s Guide](http://map.grauw.nl/resources/video/ti-vdp-programmers-guide.pdf) `PDF`
+- Texas Instruments [TMS9918A VDP](http://bifi.msxnet.org/msxnet/tech/tms9918a.txt) by Sean Young `TXT`
+- The MSX Red Book · [2 Video Display Processor](https://github.com/gseidler/The-MSX-Red-Book/blob/master/the_msx_red_book.md#chapter_2) `HTML`
+- YAMAHA [9938 Technical Data Book](http://map.grauw.nl/resources/video/v9938/v9938.xhtml) `HTML`
 
 <br/>
 

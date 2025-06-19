@@ -3,6 +3,7 @@
 <table>
 <tr><td>Name</td><td>VDP_SPRITES_MSXBIOS</td></tr>
 <tr><td>Architecture</td><td>MSX</td></tr>
+<tr><td>Environment</td><td>ROM, MSXBASIC</td></tr>
 <tr><td>Format</td><td>C Object (SDCC .rel)</td></tr>
 <tr><td>Programming language</td><td>C and Z80 assembler</td></tr>
 <tr><td>Compiler</td><td>SDCC v4.4 or newer</td></tr>
@@ -83,8 +84,7 @@ It's possible that, with what I've learned from developing these libraries, I co
 | SetSpriteColor    | `SetSpriteColor(char plane, char color)` | Assign a color to a sprite plane |
 | SetSpritePosition | `SetSpritePosition(char plane, char x, char y)` | Assigns the position coordinates of a sprite plane |
 | SetSpriteVisible  | `SetSpriteVisible(char plane, char state)` | Hides or shows a sprite plane |
-| SetEarlyClock     | `SetEarlyClock(char plane)` | Apply the Early Clock of a sprite plane. Move 32 points to the left the X position of the sprite |
-| UnsetEarlyClock   | `UnsetEarlyClock(char plane)` | Disables the Early Clock. Restore the position of a sprite plane |
+| SetEarlyClock     | `SetEarlyClock(char plane, char state)` | Enable or Disable the EarlyClock of a sprite plane. Move 32 points to the left the X position of the sprite |
 
 <br/>
 
